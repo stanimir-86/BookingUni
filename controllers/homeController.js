@@ -6,7 +6,10 @@ homeController.get('/', (req, res) => {
         title: 'Home Page',
         user: req.user,
     });
-
 });
+
+
+
+
 
 module.exports = homeController;
