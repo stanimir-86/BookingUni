@@ -1,12 +1,16 @@
-const { create } = require('../services/hotelService.js');
+const { create, getById } = require('../services/hotelService.js');
 const { parseError } = require('../util/parser.js');
 
 
 const hotelCotntroller = require('express').Router();
 
-hotelCotntroller.get('/:id/details', (req, res) => {
+hotelCotntroller.get('/:id/details', async (req, res) => {
+    const hotel = await getById(req.params.id);
+
+
     res.render('details', {
-        title: 'Hotel Details'
+        title: 'Hotel Details',
+        hotel
     });
 });
 
