@@ -108,6 +108,11 @@ hotelCotntroller.get('/:id/book', async (req, res) => {
             hotel.isOwner = true;
             throw new Error('Connot book your own hotel')
         }
+        if (hotel.bookings.map(b => b.toString()).includes(req.user._id.toString())) {
+            hotel.isBooked = true;
+
+            throw new Error('Cannot book twice');
+        }
         await bookRoom(req.params.id, req.user._id);
         res.redirect(`/hotel/${req.params.id}/details`);
     } catch (err) {
