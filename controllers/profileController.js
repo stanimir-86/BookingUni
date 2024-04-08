@@ -1,8 +1,14 @@
+const { hasUser } = require('../middlewares/guards.js');
+const { getByUserBooking } = require('../services/hotelService.js');
+
 const profileController = require('express').Router()
 
-profileController.get('/', (req, res) => {
+profileController.get('/', hasUser(), async (req, res) => {
+    const bookings = await getByUserBooking(req.user._id);
+
     res.render('profile', {
-        title: 'Profile Hotel'
+        title: 'Profile Page',
+        user: Object.assign({ bookings }, req.user)
     })
 });
 
